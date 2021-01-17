@@ -1,4 +1,5 @@
 import * as Http from "http";
+import * as Url from "url";
 
 export namespace P_3_1Server {
     console.log("Starting server");
@@ -20,6 +21,10 @@ export namespace P_3_1Server {
         console.log("I hear voices!");
         _response.setHeader("content-type", "text/html; charset=utf-8");
         _response.setHeader("Access-Control-Allow-Origin", "*");
+        let q = Url.parse(_request.url, true);
+        console.log(q.host);
+        console.log(q.pathname);
+        console.log(q.search);
         _response.write(_request.url);
         _response.end();
     }
