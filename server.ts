@@ -25,7 +25,8 @@ export namespace P_3_1Server {
         console.log(q.host);
         console.log(q.pathname);
         console.log(q.search);
-        _response.write(_request.url);
+        let qdata = q.query;        
+        _response.write(JSON.stringify(qdata));
         _response.end();
     }
 }
