@@ -24,7 +24,7 @@ export namespace P_3_1Server {
     }
 
     function inputUser(_input: MyInput): User {
-        let myUser: User;
+        let myUser: User = { "Name": "", "Nachname": "", "Adresse": "", "email": "", "Passwort": "" };
         myUser.Name = _input.Name;
         myUser.Nachname = _input.Nachname;
         myUser.email = _input.email;
@@ -96,12 +96,7 @@ export namespace P_3_1Server {
         let jsonString: string = JSON.stringify(q.query);
         let input: MyInput = JSON.parse(jsonString);
         if (input.task == "register") {
-            let user: User = { "Name": "", "Nachname": "", "Adresse": "", "email": "", "Passwort": "" };
-            user.Name = input.Name;
-            user.Nachname = input.Nachname;
-            user.email = input.email;
-            user.Adresse = input.Adresse;
-            user.Passwort = input.Passwort;
+            let user: User = inputUser(input);
             if (!(await checkUser(user).catch(() => {
                 console.log("Check failed!");
             }))) {

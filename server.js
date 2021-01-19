@@ -8,7 +8,7 @@ var P_3_1Server;
 (function (P_3_1Server) {
     console.log("Starting server");
     function inputUser(_input) {
-        let myUser;
+        let myUser = { "Name": "", "Nachname": "", "Adresse": "", "email": "", "Passwort": "" };
         myUser.Name = _input.Name;
         myUser.Nachname = _input.Nachname;
         myUser.email = _input.email;
@@ -67,12 +67,7 @@ var P_3_1Server;
         let jsonString = JSON.stringify(q.query);
         let input = JSON.parse(jsonString);
         if (input.task == "register") {
-            let user = { "Name": "", "Nachname": "", "Adresse": "", "email": "", "Passwort": "" };
-            user.Name = input.Name;
-            user.Nachname = input.Nachname;
-            user.email = input.email;
-            user.Adresse = input.Adresse;
-            user.Passwort = input.Passwort;
+            let user = inputUser(input);
             if (!(await checkUser(user).catch(() => {
                 console.log("Check failed!");
             }))) {
