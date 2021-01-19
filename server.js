@@ -34,7 +34,13 @@ var P_3_1Server;
         console.log("Listening");
     }
     async function checkUser(_user) {
-        let newUser = await users.findOne({ "email": _user.email });
+        let newUser;
+        try {
+            newUser = await users.findOne({ "email": _user.email });
+        }
+        catch (error) {
+            console.log(error.stack);
+        }
         return _user.email == newUser.email;
     }
     async function handleRequest(_request, _response) {
