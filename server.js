@@ -50,17 +50,21 @@ var P_3_1Server;
         console.log(q.pathname);
         console.log(q.search);
         let jsonString = JSON.stringify(q.query);
-        let user = JSON.parse(jsonString);
-        if (!(await checkUser(user).catch(() => {
-            console.log("Check failed!");
-        }))) {
-            storeUser(user);
-            _response.write("user created!");
-            _response.end();
-        }
-        else {
-            _response.write("user already exists!");
-            _response.end();
+        let myTask = JSON.parse(jsonString);
+        console.log(myTask);
+        if (false) {
+            let user = JSON.parse(jsonString);
+            if (!(await checkUser(user).catch(() => {
+                console.log("Check failed!");
+            }))) {
+                storeUser(user);
+                _response.write("user created!");
+                _response.end();
+            }
+            else {
+                _response.write("user already exists!");
+                _response.end();
+            }
         }
     }
 })(P_3_1Server = exports.P_3_1Server || (exports.P_3_1Server = {}));

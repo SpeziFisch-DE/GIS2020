@@ -14,6 +14,10 @@ export namespace P_3_1Server {
         //[type: string]: string | string[];
     }
 
+    interface Task {
+        task: string;
+    }
+
     let users: Mongo.Collection;
 
     let port: number = Number(process.env.PORT);
@@ -53,7 +57,7 @@ export namespace P_3_1Server {
         return _user.email == newUser.email;
     }
     async function checkPassword(_user: User): Promise<boolean> {
-        let newUser: User = JSON.parse(JSON.stringify(await users.findOne({ "Passwort": _user.Passwort,  "email": _user.email })));
+        let newUser: User = JSON.parse(JSON.stringify(await users.findOne({ "Passwort": _user.Passwort, "email": _user.email })));
         return (_user.email == newUser.email && _user.Passwort == newUser.Passwort);
     }
 
@@ -67,16 +71,20 @@ export namespace P_3_1Server {
         console.log(q.pathname);
         console.log(q.search);
         let jsonString: string = JSON.stringify(q.query);
-        let user: User = JSON.parse(jsonString);
-        if (!(await checkUser(user).catch(() => {
-            console.log("Check failed!");
-        }))) {
-            storeUser(user);
-            _response.write("user created!");
-            _response.end();
-        } else {
-            _response.write("user already exists!");
-            _response.end();
+        let myTask: Task = JSON.parse(jsonString);
+        console.log(myTask);
+        if (false) {
+            let user: User = JSON.parse(jsonString);
+            if (!(await checkUser(user).catch(() => {
+                console.log("Check failed!");
+            }))) {
+                storeUser(user);
+                _response.write("user created!");
+                _response.end();
+            } else {
+                _response.write("user already exists!");
+                _response.end();
+            }
         }
     }
 }
