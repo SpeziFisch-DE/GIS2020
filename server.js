@@ -35,12 +35,9 @@ var P_3_1Server;
     }
     async function checkUser(_user) {
         let newUser;
-        try {
-            newUser = await users.findOne({ "email": _user.email });
-        }
-        catch (error) {
-            console.log(error.stack);
-        }
+        newUser = await users.findOne({ "email": _user.email }).catch(() => {
+            console.log("Check failed!");
+        });
         return _user.email == newUser.email;
     }
     async function handleRequest(_request, _response) {
