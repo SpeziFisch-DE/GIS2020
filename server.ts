@@ -96,7 +96,7 @@ export namespace P_3_1Server {
         let jsonString: string = JSON.stringify(q.query);
         let input: MyInput = JSON.parse(jsonString);
         if (input.task == "register") {
-            let user: User;
+            let user: User = { "Name": "", "Nachname": "", "Adresse": "", "email": "", "Passwort": "" };
             user.Name = input.Name;
             user.Nachname = input.Nachname;
             user.email = input.email;
