@@ -27,16 +27,7 @@ export namespace P_3_1Server {
         email: string;
         Passwort: string;
     }
-
-    interface Task {
-        task: string;
-    }
-
-    function inputTask (_input: MyInput): Task {
-        let myTask: Task;
-        myTask.task = _input.task;
-        return myTask;
-    }
+    
     function inputUser (_input: MyInput): User {
         let myUser: User;
         myUser.Name = _input.Name;
@@ -117,9 +108,7 @@ export namespace P_3_1Server {
         console.log(q.search);
         let jsonString: string = JSON.stringify(q.query);
         let input: MyInput = JSON.parse(jsonString);
-        let myTask: Task = {"task": "showusers"}; //inputTask(input);
-        console.log(myTask);
-        if (myTask.task == "register") {
+        if (input.task == "register") {
             let user: User = inputUser(input);
             if (!(await checkUser(user).catch(() => {
                 console.log("Check failed!");
@@ -131,14 +120,14 @@ export namespace P_3_1Server {
                 _response.write("user already exists!");
                 _response.end();
             }
-        } else if (myTask.task == "showusers") {
+        } else if (input.task == "showusers") {
             let responseString: string | void;
             responseString = (await getUsers().catch(() => {
                 console.log("failed!");
                 responseString = "Failed to load users!";
             }));
             _response.write(responseString);
-        } else if (myTask.task == "signin") {
+        } else if (input.task == "signin") {
             let sign: SignIn = inputSignIn(input);
             if ((await checkPassword(sign).catch(() => {
                 console.log("Sign in failed!");

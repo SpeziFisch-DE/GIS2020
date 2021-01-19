@@ -7,11 +7,6 @@ const Mongo = require("mongodb");
 var P_3_1Server;
 (function (P_3_1Server) {
     console.log("Starting server");
-    function inputTask(_input) {
-        let myTask;
-        myTask.task = _input.task;
-        return myTask;
-    }
     function inputUser(_input) {
         let myUser;
         myUser.Name = _input.Name;
@@ -79,9 +74,7 @@ var P_3_1Server;
         console.log(q.search);
         let jsonString = JSON.stringify(q.query);
         let input = JSON.parse(jsonString);
-        let myTask = { "task": "showusers" }; //inputTask(input);
-        console.log(myTask);
-        if (myTask.task == "register") {
+        if (input.task == "register") {
             let user = inputUser(input);
             if (!(await checkUser(user).catch(() => {
                 console.log("Check failed!");
@@ -95,7 +88,7 @@ var P_3_1Server;
                 _response.end();
             }
         }
-        else if (myTask.task == "showusers") {
+        else if (input.task == "showusers") {
             let responseString;
             responseString = (await getUsers().catch(() => {
                 console.log("failed!");
@@ -103,7 +96,7 @@ var P_3_1Server;
             }));
             _response.write(responseString);
         }
-        else if (myTask.task == "signin") {
+        else if (input.task == "signin") {
             let sign = inputSignIn(input);
             if ((await checkPassword(sign).catch(() => {
                 console.log("Sign in failed!");
