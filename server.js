@@ -67,7 +67,7 @@ var P_3_1Server;
         let jsonString = JSON.stringify(q.query);
         let input = JSON.parse(jsonString);
         if (input.task == "register") {
-            let user = JSON.parse(jsonString);
+            let user;
             user.Name = input.Name;
             user.Nachname = input.Nachname;
             user.email = input.email;
