@@ -50,7 +50,9 @@ var P_3_1Server;
         console.log(q.search);
         let jsonString = JSON.stringify(q.query);
         let user = JSON.parse(jsonString);
-        if (true) {
+        if (await checkUser(user).catch(() => {
+            console.log("Check failed!");
+        })) {
             storeUser(user);
             _response.write("user created!");
             _response.end();
