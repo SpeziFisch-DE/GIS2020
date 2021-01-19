@@ -60,7 +60,8 @@ var P_3_1Server;
         for (let i = 0; myUsers.length; i++) {
             returnString = returnString + "<p>" + myUsers[i].Name + " " + myUsers[i].Nachname + "</p></br>";
         }
-        return returnString + jsonUsers;
+        console.log(returnString);
+        return returnString;
     }
     async function handleRequest(_request, _response) {
         console.log("I hear voices!");
