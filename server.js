@@ -68,6 +68,11 @@ var P_3_1Server;
         let input = JSON.parse(jsonString);
         if (input.task == "register") {
             let user = JSON.parse(jsonString);
+            user.Name = input.Name;
+            user.Nachname = input.Nachname;
+            user.email = input.email;
+            user.Adresse = input.Adresse;
+            user.Passwort = input.Passwort;
             if (!(await checkUser(user).catch(() => {
                 console.log("Check failed!");
             }))) {
