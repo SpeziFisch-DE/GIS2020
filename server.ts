@@ -103,8 +103,6 @@ export namespace P_3_1Server {
         _response.setHeader("content-type", "text/html; charset=utf-8");
         _response.setHeader("Access-Control-Allow-Origin", "*");
         let q: Url.UrlWithParsedQuery = Url.parse(_request.url, true);
-        console.log(q.host);
-        console.log(q.pathname);
         console.log(q.search);
         let jsonString: string = JSON.stringify(q.query);
         let input: MyInput = JSON.parse(jsonString);
@@ -138,6 +136,9 @@ export namespace P_3_1Server {
                 _response.write("Sign in unsucessful!");
                 _response.end();
             }
+        } else {
+            _response.write("something went wrong!");
+            _response.end();
         }
     }
 }
