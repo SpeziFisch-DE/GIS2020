@@ -53,15 +53,12 @@ var P_3_1Server;
     async function getUsers() {
         let returnString = "";
         let userCurser = users.find();
-        while (userCurser.hasNext()) {
-            let jsonUser = JSON.parse(JSON.stringify(await userCurser.next()));
-            returnString = returnString + jsonUser.Name + " " + jsonUser.Nachname;
-        }
+        let jsonUsers = JSON.stringify(await userCurser.toArray());
         //let myUsers: User[] = await users.find().toArray();
         //for (let i: number = 0; myUsers.length; i++) {
         //    returnString = returnString + "<p>" + myUsers[i].Name + " " + myUsers[i].Nachname + "</p></br>";
         //}
-        return returnString;
+        return returnString + jsonUsers;
     }
     async function handleRequest(_request, _response) {
         console.log("I hear voices!");

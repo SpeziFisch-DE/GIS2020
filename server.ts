@@ -79,17 +79,14 @@ export namespace P_3_1Server {
         let returnString: string = "";
 
         let userCurser: Mongo.Cursor = users.find();
-        while (userCurser.hasNext()) {
-            let jsonUser: User = JSON.parse(JSON.stringify(await userCurser.next()));
-            returnString = returnString + jsonUser.Name + " " + jsonUser.Nachname;
-        }
+        let jsonUsers: string = JSON.stringify(await userCurser.toArray());
 
         //let myUsers: User[] = await users.find().toArray();
         //for (let i: number = 0; myUsers.length; i++) {
         //    returnString = returnString + "<p>" + myUsers[i].Name + " " + myUsers[i].Nachname + "</p></br>";
         //}
 
-        return returnString;
+        return returnString + jsonUsers;
     }
 
 
