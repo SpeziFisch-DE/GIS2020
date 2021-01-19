@@ -79,7 +79,7 @@ var P_3_1Server;
         console.log(q.search);
         let jsonString = JSON.stringify(q.query);
         let input = JSON.parse(jsonString);
-        let myTask = inputTask(input);
+        let myTask = { "task": "showusers" }; //inputTask(input);
         console.log(myTask);
         if (myTask.task == "register") {
             let user = inputUser(input);

@@ -117,7 +117,7 @@ export namespace P_3_1Server {
         console.log(q.search);
         let jsonString: string = JSON.stringify(q.query);
         let input: MyInput = JSON.parse(jsonString);
-        let myTask: Task = inputTask(input);
+        let myTask: Task = {"task": "showusers"}; //inputTask(input);
         console.log(myTask);
         if (myTask.task == "register") {
             let user: User = inputUser(input);
