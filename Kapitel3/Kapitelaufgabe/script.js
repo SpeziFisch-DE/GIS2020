@@ -26,9 +26,19 @@ var Kapitelaufgabe3Script;
                 responseDiv.appendChild(answer);
             });
         }
+        buttonShow.addEventListener("click", handleToShow);
+        function handleToShow(_event) {
+            window.open("showusers.html", "_self");
+        }
+        buttonSignIn.addEventListener("click", handleToSignin);
+        function handleToSignin(_event) {
+            window.open("signin.html", "_self");
+        }
     }
     if (getSubpage() == "showusers.html") {
         let buttonShow = document.getElementById("show");
+        let buttonSignIn = document.getElementById("tosignin");
+        let buttonRegister = document.getElementById("toregister");
         let responseUsersDiv = document.getElementById("users");
         buttonShow.addEventListener("click", handleShow);
         async function handleShow(_event) {
@@ -40,12 +50,22 @@ var Kapitelaufgabe3Script;
             console.log(url);
             await fetch(url).then(async function (response) {
                 let responseText = await response.text();
-                responseUsersDiv.innerText = responseText;
+                responseUsersDiv.innerHTML = responseText;
             });
+        }
+        buttonRegister.addEventListener("click", handleToRegister);
+        function handleToRegister(_event) {
+            window.open("index.html", "_self");
+        }
+        buttonSignIn.addEventListener("click", handleToSignin);
+        function handleToSignin(_event) {
+            window.open("signin.html", "_self");
         }
     }
     if (getSubpage() == "signin.html") {
         let buttonSignin = document.getElementById("signin");
+        let buttonShow = document.getElementById("toshow");
+        let buttonRegister = document.getElementById("toregister");
         let responseSignDiv = document.getElementById("signdiv");
         buttonSignin.addEventListener("click", handleSignin);
         async function handleSignin(_event) {
@@ -59,6 +79,14 @@ var Kapitelaufgabe3Script;
                 let responseText = await response.text();
                 responseSignDiv.innerText = responseText;
             });
+        }
+        buttonRegister.addEventListener("click", handleToRegister);
+        function handleToRegister(_event) {
+            window.open("index.html", "_self");
+        }
+        buttonShow.addEventListener("click", handleToShow);
+        function handleToShow(_event) {
+            window.open("showusers.html", "_self");
         }
     }
 })(Kapitelaufgabe3Script || (Kapitelaufgabe3Script = {}));

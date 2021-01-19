@@ -29,9 +29,21 @@ namespace Kapitelaufgabe3Script {
             );
 
         }
+
+        buttonShow.addEventListener("click", handleToShow);
+        function handleToShow(_event: Event): void {
+            window.open("showusers.html", "_self");
+        }
+
+        buttonSignIn.addEventListener("click", handleToSignin);
+        function handleToSignin(_event: Event): void {
+            window.open("signin.html", "_self");
+        }
     }
     if (getSubpage() == "showusers.html"){
         let buttonShow: HTMLElement = document.getElementById("show");
+        let buttonSignIn: HTMLElement = document.getElementById("tosignin");
+        let buttonRegister: HTMLElement = document.getElementById("toregister");
         let responseUsersDiv: HTMLElement = document.getElementById("users");
 
         buttonShow.addEventListener("click", handleShow);
@@ -44,13 +56,25 @@ namespace Kapitelaufgabe3Script {
             console.log(url);
             await fetch(url).then(async function (response: Response): Promise<void> {
                 let responseText: string = await response.text();
-                responseUsersDiv.innerText = responseText;
+                responseUsersDiv.innerHTML = responseText;
             }
             );
+        }
+
+        buttonRegister.addEventListener("click", handleToRegister);
+        function handleToRegister(_event: Event): void {
+            window.open("index.html", "_self");
+        }
+
+        buttonSignIn.addEventListener("click", handleToSignin);
+        function handleToSignin(_event: Event): void {
+            window.open("signin.html", "_self");
         }
     }
     if (getSubpage() == "signin.html"){
         let buttonSignin: HTMLElement = document.getElementById("signin");
+        let buttonShow: HTMLElement = document.getElementById("toshow");
+        let buttonRegister: HTMLElement = document.getElementById("toregister");
         let responseSignDiv: HTMLElement = document.getElementById("signdiv");
 
         buttonSignin.addEventListener("click", handleSignin);
@@ -66,6 +90,16 @@ namespace Kapitelaufgabe3Script {
                 responseSignDiv.innerText = responseText;
             }
             );
+        }
+
+        buttonRegister.addEventListener("click", handleToRegister);
+        function handleToRegister(_event: Event): void {
+            window.open("index.html", "_self");
+        }
+
+        buttonShow.addEventListener("click", handleToShow);
+        function handleToShow(_event: Event): void {
+            window.open("showusers.html", "_self");
         }
     }
 
