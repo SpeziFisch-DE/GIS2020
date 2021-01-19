@@ -54,13 +54,10 @@ var P_3_1Server;
         let returnString = "";
         let userCurser = users.find();
         let jsonUsers = JSON.stringify(await userCurser.toArray());
-        console.log(jsonUsers);
         let myUsers = JSON.parse(jsonUsers);
-        console.log(myUsers);
-        for (let i = 0; myUsers.length; i++) {
+        for (let i = 0; i < myUsers.length; i++) {
             returnString = returnString + "<p>" + myUsers[i].Name + " " + myUsers[i].Nachname + "</p></br>";
         }
-        console.log(returnString);
         return returnString;
     }
     async function handleRequest(_request, _response) {
