@@ -12,6 +12,7 @@ var Kapitelaufgabe3Script;
         buttonSubmit.addEventListener("click", handleSubmit);
         async function handleSubmit(_event) {
             let formData = new FormData(document.forms[0]);
+            formData.append("task", "register");
             let url = "https://hfugis2020.herokuapp.com";
             let query = new URLSearchParams(formData);
             url = url + "?" + query.toString();
@@ -34,12 +35,30 @@ var Kapitelaufgabe3Script;
             let formData = new FormData();
             let url = "https://hfugis2020.herokuapp.com";
             formData.append("task", "showusers");
+            formData.append("tick", "tack");
             let query = new URLSearchParams(formData);
             url = url + "?" + query.toString();
             console.log(url);
             await fetch(url).then(async function (response) {
                 let responseText = await response.text();
                 responseUsersDiv.innerText = responseText;
+            });
+        }
+    }
+    if (getSubpage() == "signin.html") {
+        let buttonSignin = document.getElementById("signin");
+        let responseSignDiv = document.getElementById("signdiv");
+        buttonSignin.addEventListener("click", handleSignin);
+        async function handleSignin(_event) {
+            let formData = new FormData();
+            let url = "https://hfugis2020.herokuapp.com";
+            formData.append("task", "signin");
+            let query = new URLSearchParams(formData);
+            url = url + "?" + query.toString();
+            console.log(url);
+            await fetch(url).then(async function (response) {
+                let responseText = await response.text();
+                responseSignDiv.innerText = responseText;
             });
         }
     }

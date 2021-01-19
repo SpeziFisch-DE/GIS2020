@@ -13,6 +13,7 @@ namespace Kapitelaufgabe3Script {
         buttonSubmit.addEventListener("click", handleSubmit);
         async function handleSubmit(_event: Event): Promise<void> {
             let formData: FormData = new FormData(document.forms[0]);
+            formData.append("task", "register");
             let url: string = "https://hfugis2020.herokuapp.com";
             let query: URLSearchParams = new URLSearchParams(<any>formData);
             url = url + "?" + query.toString();
@@ -38,12 +39,32 @@ namespace Kapitelaufgabe3Script {
             let formData: FormData = new FormData();
             let url: string = "https://hfugis2020.herokuapp.com";
             formData.append("task", "showusers");
+            formData.append("tick", "tack");
             let query: URLSearchParams = new URLSearchParams(<any>formData);
             url = url + "?" + query.toString();
             console.log(url);
             await fetch(url).then(async function (response: Response): Promise<void> {
                 let responseText: string = await response.text();
                 responseUsersDiv.innerText = responseText;
+            }
+            );
+        }
+    }
+    if (getSubpage() == "signin.html"){
+        let buttonSignin: HTMLElement = document.getElementById("signin");
+        let responseSignDiv: HTMLElement = document.getElementById("signdiv");
+
+        buttonSignin.addEventListener("click", handleSignin);
+        async function handleSignin(_event: Event): Promise<void> {
+            let formData: FormData = new FormData();
+            let url: string = "https://hfugis2020.herokuapp.com";
+            formData.append("task", "signin");
+            let query: URLSearchParams = new URLSearchParams(<any>formData);
+            url = url + "?" + query.toString();
+            console.log(url);
+            await fetch(url).then(async function (response: Response): Promise<void> {
+                let responseText: string = await response.text();
+                responseSignDiv.innerText = responseText;
             }
             );
         }

@@ -7,6 +7,26 @@ const Mongo = require("mongodb");
 var P_3_1Server;
 (function (P_3_1Server) {
     console.log("Starting server");
+    function inputTask(_input) {
+        let myTask;
+        myTask.task = _input.task;
+        return myTask;
+    }
+    function inputUser(_input) {
+        let myUser;
+        myUser.Name = _input.Name;
+        myUser.Nachname = _input.Nachname;
+        myUser.email = _input.email;
+        myUser.Adresse = _input.Adresse;
+        myUser.Passwort = _input.Passwort;
+        return myUser;
+    }
+    function inputSignIn(_input) {
+        let mySignIn;
+        mySignIn.email = _input.email;
+        mySignIn.Passwort = _input.Passwort;
+        return mySignIn;
+    }
     let users;
     let port = Number(process.env.PORT);
     if (!port)
@@ -41,6 +61,14 @@ var P_3_1Server;
         let newUser = JSON.parse(JSON.stringify(await users.findOne({ "Passwort": _user.Passwort, "email": _user.email })));
         return (_user.email == newUser.email && _user.Passwort == newUser.Passwort);
     }
+    async function getUsers() {
+        let returnString = "";
+        let myUsers = JSON.parse(JSON.stringify(await users.find()));
+        for (let i = 0; myUsers.length; i++) {
+            returnString = returnString + "<p>" + myUsers[i].Name + " " + myUsers[i].Nachname + "</p></br>";
+        }
+        return returnString;
+    }
     async function handleRequest(_request, _response) {
         console.log("I hear voices!");
         _response.setHeader("content-type", "text/html; charset=utf-8");
@@ -50,10 +78,11 @@ var P_3_1Server;
         console.log(q.pathname);
         console.log(q.search);
         let jsonString = JSON.stringify(q.query);
-        let myTask = JSON.parse(jsonString);
+        let input = JSON.parse(jsonString);
+        let myTask = inputTask(input);
         console.log(myTask);
-        if (false) {
-            let user = JSON.parse(jsonString);
+        if (myTask.task == "register") {
+            let user = inputUser(input);
             if (!(await checkUser(user).catch(() => {
                 console.log("Check failed!");
             }))) {
@@ -63,6 +92,27 @@ var P_3_1Server;
             }
             else {
                 _response.write("user already exists!");
+                _response.end();
+            }
+        }
+        else if (myTask.task == "showusers") {
+            let responseString;
+            responseString = (await getUsers().catch(() => {
+                console.log("failed!");
+                responseString = "Failed to load users!";
+            }));
+            _response.write(responseString);
+        }
+        else if (myTask.task == "signin") {
+            let sign = inputSignIn(input);
+            if ((await checkPassword(sign).catch(() => {
+                console.log("Sign in failed!");
+            }))) {
+                _response.write("Sign in sucessful!");
+                _response.end();
+            }
+            else {
+                _response.write("Sign in unsucessful!");
                 _response.end();
             }
         }

@@ -5,6 +5,15 @@ import * as Mongo from "mongodb";
 export namespace P_3_1Server {
     console.log("Starting server");
 
+    interface MyInput {
+        Name: string;
+        Nachname: string;
+        email: string;
+        Adresse: string;
+        Passwort: string;
+        task: string;
+    }
+
     interface User {
         Name: string;
         Nachname: string;
@@ -14,8 +23,34 @@ export namespace P_3_1Server {
         //[type: string]: string | string[];
     }
 
+    interface SignIn {
+        email: string;
+        Passwort: string;
+    }
+
     interface Task {
         task: string;
+    }
+
+    function inputTask (_input: MyInput): Task {
+        let myTask: Task;
+        myTask.task = _input.task;
+        return myTask;
+    }
+    function inputUser (_input: MyInput): User {
+        let myUser: User;
+        myUser.Name = _input.Name;
+        myUser.Nachname = _input.Nachname;
+        myUser.email = _input.email;
+        myUser.Adresse = _input.Adresse;
+        myUser.Passwort = _input.Passwort;
+        return myUser;
+    }
+    function inputSignIn (_input: MyInput): SignIn {
+        let mySignIn: SignIn;
+        mySignIn.email = _input.email;
+        mySignIn.Passwort = _input.Passwort;
+        return mySignIn;
     }
 
     let users: Mongo.Collection;
@@ -56,9 +91,19 @@ export namespace P_3_1Server {
         let newUser: User = JSON.parse(JSON.stringify(await users.findOne({ "email": _user.email })));
         return _user.email == newUser.email;
     }
-    async function checkPassword(_user: User): Promise<boolean> {
+    async function checkPassword(_user: SignIn): Promise<boolean> {
         let newUser: User = JSON.parse(JSON.stringify(await users.findOne({ "Passwort": _user.Passwort, "email": _user.email })));
         return (_user.email == newUser.email && _user.Passwort == newUser.Passwort);
+    }
+    async function getUsers(): Promise<string> {
+        let returnString: string = "";
+
+        let myUsers: User[] = JSON.parse(JSON.stringify(await users.find()));
+        for (let i: number = 0; myUsers.length; i++) {
+            returnString = returnString + "<p>" + myUsers[i].Name + " " + myUsers[i].Nachname + "</p></br>";
+        }
+
+        return returnString;
     }
 
 
@@ -71,10 +116,11 @@ export namespace P_3_1Server {
         console.log(q.pathname);
         console.log(q.search);
         let jsonString: string = JSON.stringify(q.query);
-        let myTask: Task = JSON.parse(jsonString);
+        let input: MyInput = JSON.parse(jsonString);
+        let myTask: Task = inputTask(input);
         console.log(myTask);
-        if (false) {
-            let user: User = JSON.parse(jsonString);
+        if (myTask.task == "register") {
+            let user: User = inputUser(input);
             if (!(await checkUser(user).catch(() => {
                 console.log("Check failed!");
             }))) {
@@ -83,6 +129,24 @@ export namespace P_3_1Server {
                 _response.end();
             } else {
                 _response.write("user already exists!");
+                _response.end();
+            }
+        } else if (myTask.task == "showusers") {
+            let responseString: string | void;
+            responseString = (await getUsers().catch(() => {
+                console.log("failed!");
+                responseString = "Failed to load users!";
+            }));
+            _response.write(responseString);
+        } else if (myTask.task == "signin") {
+            let sign: SignIn = inputSignIn(input);
+            if ((await checkPassword(sign).catch(() => {
+                console.log("Sign in failed!");
+            }))) {
+                _response.write("Sign in sucessful!");
+                _response.end();
+            } else {
+                _response.write("Sign in unsucessful!");
                 _response.end();
             }
         }
