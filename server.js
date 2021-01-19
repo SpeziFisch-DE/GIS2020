@@ -52,9 +52,15 @@ var P_3_1Server;
     }
     async function getUsers() {
         let returnString = "";
-        for (let i = 0; myUsers.length; i++) {
-            returnString = returnString + "<p>" + myUsers[i].Name + " " + myUsers[i].Nachname + "</p></br>";
+        let userCurser = users.find();
+        if (userCurser.hasNext()) {
+            let jsonUser = JSON.parse(JSON.stringify(await userCurser.next()));
+            returnString = returnString + "<p>" + jsonUser.Name + " " + jsonUser.Nachname + "</p></br>";
         }
+        //let myUsers: User[] = await users.find().toArray();
+        //for (let i: number = 0; myUsers.length; i++) {
+        //    returnString = returnString + "<p>" + myUsers[i].Name + " " + myUsers[i].Nachname + "</p></br>";
+        //}
         return returnString;
     }
     async function handleRequest(_request, _response) {
