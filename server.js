@@ -54,7 +54,9 @@ var P_3_1Server;
         let returnString = "";
         let userCurser = users.find();
         let jsonUsers = JSON.stringify(await userCurser.toArray());
+        console.log(jsonUsers);
         let myUsers = JSON.parse(jsonUsers);
+        console.log(myUsers);
         for (let i = 0; myUsers.length; i++) {
             returnString = returnString + "<p>" + myUsers[i].Name + " " + myUsers[i].Nachname + "</p></br>";
         }

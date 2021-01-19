@@ -80,7 +80,9 @@ export namespace P_3_1Server {
 
         let userCurser: Mongo.Cursor = users.find();
         let jsonUsers: string = JSON.stringify(await userCurser.toArray());
+        console.log(jsonUsers);
         let myUsers: User[] = JSON.parse(jsonUsers);
+        console.log(myUsers);
         for (let i: number = 0; myUsers.length; i++) {
             returnString = returnString + "<p>" + myUsers[i].Name + " " + myUsers[i].Nachname + "</p></br>";
         }
