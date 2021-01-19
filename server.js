@@ -16,12 +16,6 @@ var P_3_1Server;
         myUser.Passwort = _input.Passwort;
         return myUser;
     }
-    function inputSignIn(_input) {
-        let mySignIn;
-        mySignIn.email = _input.email;
-        mySignIn.Passwort = _input.Passwort;
-        return mySignIn;
-    }
     let users;
     let port = Number(process.env.PORT);
     if (!port)
@@ -73,7 +67,7 @@ var P_3_1Server;
         let jsonString = JSON.stringify(q.query);
         let input = JSON.parse(jsonString);
         if (input.task == "register") {
-            let user = inputUser(input);
+            let user = JSON.parse(jsonString);
             if (!(await checkUser(user).catch(() => {
                 console.log("Check failed!");
             }))) {
@@ -95,8 +89,7 @@ var P_3_1Server;
             _response.write(responseString);
         }
         else if (input.task == "signin") {
-            let sign = inputSignIn(input);
-            if ((await checkPassword(sign).catch(() => {
+            if ((await checkPassword(input).catch(() => {
                 console.log("Sign in failed!");
             }))) {
                 _response.write("Sign in sucessful!");

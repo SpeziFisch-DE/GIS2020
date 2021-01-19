@@ -37,12 +37,6 @@ export namespace P_3_1Server {
         myUser.Passwort = _input.Passwort;
         return myUser;
     }
-    function inputSignIn (_input: MyInput): SignIn {
-        let mySignIn: SignIn;
-        mySignIn.email = _input.email;
-        mySignIn.Passwort = _input.Passwort;
-        return mySignIn;
-    }
 
     let users: Mongo.Collection;
 
@@ -82,7 +76,7 @@ export namespace P_3_1Server {
         let newUser: User = JSON.parse(JSON.stringify(await users.findOne({ "email": _user.email })));
         return _user.email == newUser.email;
     }
-    async function checkPassword(_user: SignIn): Promise<boolean> {
+    async function checkPassword(_user: MyInput): Promise<boolean> {
         let newUser: User = JSON.parse(JSON.stringify(await users.findOne({ "Passwort": _user.Passwort, "email": _user.email })));
         return (_user.email == newUser.email && _user.Passwort == newUser.Passwort);
     }
@@ -107,7 +101,7 @@ export namespace P_3_1Server {
         let jsonString: string = JSON.stringify(q.query);
         let input: MyInput = JSON.parse(jsonString);
         if (input.task == "register") {
-            let user: User = inputUser(input);
+            let user: User = JSON.parse(jsonString);
             if (!(await checkUser(user).catch(() => {
                 console.log("Check failed!");
             }))) {
@@ -126,8 +120,7 @@ export namespace P_3_1Server {
             }));
             _response.write(responseString);
         } else if (input.task == "signin") {
-            let sign: SignIn = inputSignIn(input);
-            if ((await checkPassword(sign).catch(() => {
+            if ((await checkPassword(input).catch(() => {
                 console.log("Sign in failed!");
             }))) {
                 _response.write("Sign in sucessful!");
