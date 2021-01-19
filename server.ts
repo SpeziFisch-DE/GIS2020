@@ -73,7 +73,7 @@ export namespace P_3_1Server {
     }
     async function checkPassword(_user: MyInput): Promise<boolean> {
         let newUser: User = JSON.parse(JSON.stringify(await users.findOne({ "Passwort": _user.Passwort, "email": _user.email })));
-        return (_user.email == newUser.email && _user.Passwort == newUser.Passwort);
+        return newUser != undefined;
     }
     async function getUsers(): Promise<string> {
         let returnString: string = "";
