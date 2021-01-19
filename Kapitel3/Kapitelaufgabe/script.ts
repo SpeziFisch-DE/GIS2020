@@ -39,7 +39,6 @@ namespace Kapitelaufgabe3Script {
             let formData: FormData = new FormData();
             let url: string = "https://hfugis2020.herokuapp.com";
             formData.append("task", "showusers");
-            formData.append("tick", "tack");
             let query: URLSearchParams = new URLSearchParams(<any>formData);
             url = url + "?" + query.toString();
             console.log(url);
@@ -56,7 +55,7 @@ namespace Kapitelaufgabe3Script {
 
         buttonSignin.addEventListener("click", handleSignin);
         async function handleSignin(_event: Event): Promise<void> {
-            let formData: FormData = new FormData();
+            let formData: FormData = new FormData(document.forms[0]);
             let url: string = "https://hfugis2020.herokuapp.com";
             formData.append("task", "signin");
             let query: URLSearchParams = new URLSearchParams(<any>formData);
