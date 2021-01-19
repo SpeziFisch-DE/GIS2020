@@ -53,9 +53,9 @@ var P_3_1Server;
     async function getUsers() {
         let returnString = "";
         let userCurser = users.find();
-        if (userCurser.hasNext()) {
+        while (userCurser.hasNext()) {
             let jsonUser = JSON.parse(JSON.stringify(await userCurser.next()));
-            returnString = returnString + "<p>" + jsonUser.Name + " " + jsonUser.Nachname + "</p></br>";
+            returnString = returnString + jsonUser.Name + " " + jsonUser.Nachname;
         }
         //let myUsers: User[] = await users.find().toArray();
         //for (let i: number = 0; myUsers.length; i++) {

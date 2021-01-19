@@ -79,9 +79,9 @@ export namespace P_3_1Server {
         let returnString: string = "";
 
         let userCurser: Mongo.Cursor = users.find();
-        if (userCurser.hasNext()) {
+        while (userCurser.hasNext()) {
             let jsonUser: User = JSON.parse(JSON.stringify(await userCurser.next()));
-            returnString = returnString + "<p>" + jsonUser.Name + " " + jsonUser.Nachname + "</p></br>";
+            returnString = returnString + jsonUser.Name + " " + jsonUser.Nachname;
         }
 
         //let myUsers: User[] = await users.find().toArray();
