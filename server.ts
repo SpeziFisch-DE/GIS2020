@@ -78,7 +78,6 @@ export namespace P_3_1Server {
     async function getUsers(): Promise<string> {
         let returnString: string = "";
 
-        let myUsers: User[] = await users.find({}).toArray();
         for (let i: number = 0; myUsers.length; i++) {
             returnString = returnString + "<p>" + myUsers[i].Name + " " + myUsers[i].Nachname + "</p></br>";
         }

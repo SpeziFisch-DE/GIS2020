@@ -52,7 +52,6 @@ var P_3_1Server;
     }
     async function getUsers() {
         let returnString = "";
-        let myUsers = await users.find({}).toArray();
         for (let i = 0; myUsers.length; i++) {
             returnString = returnString + "<p>" + myUsers[i].Name + " " + myUsers[i].Nachname + "</p></br>";
         }
