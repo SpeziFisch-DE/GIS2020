@@ -34,10 +34,7 @@ var P_3_1Server;
         console.log("Listening");
     }
     async function checkUser(_user) {
-        let newUser;
-        newUser = await users.findOne({ "email": _user.email }).catch(() => {
-            console.log("Check failed!");
-        });
+        let newUser = JSON.parse(JSON.stringify(await users.findOne({ "email": _user.email })));
         return _user.email == newUser.email;
     }
     async function handleRequest(_request, _response) {

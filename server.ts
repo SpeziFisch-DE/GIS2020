@@ -49,10 +49,7 @@ export namespace P_3_1Server {
     }
 
     async function checkUser(_user: User): Promise<boolean> {
-        let newUser: User;
-        newUser = await users.findOne({ "email": _user.email }).catch(() => {
-            console.log("Check failed!");
-        });
+        let newUser: User = JSON.parse(JSON.stringify(await users.findOne({ "email": _user.email })));
         return _user.email == newUser.email;
     }
 
