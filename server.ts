@@ -23,15 +23,6 @@ export namespace P_3_1Server {
         //[type: string]: string | string[];
     }
 
-    interface Users {
-        Name: string[];
-        Nachname: string[];
-        email: string[];
-        Adresse: string[];
-        Passwort: string[];
-        //[type: string]: string | string[];
-    }
-
     function inputUser(_input: MyInput): User {
         let myUser: User = { "Name": "", "Nachname": "", "Adresse": "", "email": "", "Passwort": "" };
         myUser.Name = _input.Name;
@@ -84,12 +75,12 @@ export namespace P_3_1Server {
         let newUser: User = JSON.parse(JSON.stringify(await users.findOne({ "Passwort": _user.Passwort, "email": _user.email })));
         return newUser != undefined;
     }
-    function getUsers(): string {
+    async function getUsers(): Promise<string> {
         let returnString: string = "";
 
-        let myUsers: Users = JSON.parse(JSON.stringify(users.find()));
-        for (let i: number = 0; myUsers.Name.length; i++) {
-            returnString = returnString + "<p>" + myUsers.Name[i] + " " + myUsers.Nachname[i] + "</p></br>";
+        let myUsers: User[] = await users.find().toArray();
+        for (let i: number = 0; myUsers.length; i++) {
+            returnString = returnString + "<p>" + myUsers[i].Name + " " + myUsers[i].Nachname + "</p></br>";
         }
 
         return returnString;
@@ -118,7 +109,9 @@ export namespace P_3_1Server {
             }
         } else if (input.task == "showusers") {
             let responseString: string | void;
-            responseString = getUsers();
+            responseString = await getUsers().catch(() => {
+                console.log("failed!");
+            });
             _response.write("" + responseString);
             _response.end();
         } else if (input.task == "signin") {

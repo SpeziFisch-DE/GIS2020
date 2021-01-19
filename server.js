@@ -50,11 +50,11 @@ var P_3_1Server;
         let newUser = JSON.parse(JSON.stringify(await users.findOne({ "Passwort": _user.Passwort, "email": _user.email })));
         return newUser != undefined;
     }
-    function getUsers() {
+    async function getUsers() {
         let returnString = "";
-        let myUsers = JSON.parse(JSON.stringify(users.find()));
-        for (let i = 0; myUsers.Name.length; i++) {
-            returnString = returnString + "<p>" + myUsers.Name[i] + " " + myUsers.Nachname[i] + "</p></br>";
+        let myUsers = await users.find().toArray();
+        for (let i = 0; myUsers.length; i++) {
+            returnString = returnString + "<p>" + myUsers[i].Name + " " + myUsers[i].Nachname + "</p></br>";
         }
         return returnString;
     }
@@ -82,7 +82,9 @@ var P_3_1Server;
         }
         else if (input.task == "showusers") {
             let responseString;
-            responseString = getUsers();
+            responseString = await getUsers().catch(() => {
+                console.log("failed!");
+            });
             _response.write("" + responseString);
             _response.end();
         }
