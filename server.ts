@@ -64,9 +64,9 @@ export namespace P_3_1Server {
         console.log(q.search);
         let jsonString: string = JSON.stringify(q.query);
         let user: User = JSON.parse(jsonString);
-        if (await checkUser(user).catch(() => {
+        if (!(await checkUser(user).catch(() => {
             console.log("Check failed!");
-        })) {
+        }))) {
             storeUser(user);
             _response.write("user created!");
             _response.end();
