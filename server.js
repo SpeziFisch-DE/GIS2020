@@ -53,8 +53,8 @@ var P_3_1Server;
     function getUsers() {
         let returnString = "";
         let myUsers = JSON.parse(JSON.stringify(users.find()));
-        for (let i = 0; myUsers.length; i++) {
-            returnString = returnString + "<p>" + myUsers[i].Name + " " + myUsers[i].Nachname + "</p></br>";
+        for (let i = 0; myUsers.Name.length; i++) {
+            returnString = returnString + "<p>" + myUsers.Name[i] + " " + myUsers.Nachname[i] + "</p></br>";
         }
         return returnString;
     }

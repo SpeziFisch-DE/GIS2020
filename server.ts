@@ -23,6 +23,15 @@ export namespace P_3_1Server {
         //[type: string]: string | string[];
     }
 
+    interface Users {
+        Name: string[];
+        Nachname: string[];
+        email: string[];
+        Adresse: string[];
+        Passwort: string[];
+        //[type: string]: string | string[];
+    }
+
     function inputUser(_input: MyInput): User {
         let myUser: User = { "Name": "", "Nachname": "", "Adresse": "", "email": "", "Passwort": "" };
         myUser.Name = _input.Name;
@@ -78,9 +87,9 @@ export namespace P_3_1Server {
     function getUsers(): string {
         let returnString: string = "";
 
-        let myUsers: User[] = JSON.parse(JSON.stringify(users.find()));
-        for (let i: number = 0; myUsers.length; i++) {
-            returnString = returnString + "<p>" + myUsers[i].Name + " " + myUsers[i].Nachname + "</p></br>";
+        let myUsers: Users = JSON.parse(JSON.stringify(users.find()));
+        for (let i: number = 0; myUsers.Name.length; i++) {
+            returnString = returnString + "<p>" + myUsers.Name[i] + " " + myUsers.Nachname[i] + "</p></br>";
         }
 
         return returnString;
