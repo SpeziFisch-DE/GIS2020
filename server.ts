@@ -52,6 +52,10 @@ export namespace P_3_1Server {
         let newUser: User = JSON.parse(JSON.stringify(await users.findOne({ "email": _user.email })));
         return _user.email == newUser.email;
     }
+    async function checkPassword(_user: User): Promise<boolean> {
+        let newUser: User = JSON.parse(JSON.stringify(await users.findOne({ "Passwort": _user.Passwort,  "email": _user.email })));
+        return (_user.email == newUser.email && _user.Passwort == newUser.Passwort);
+    }
 
 
     async function handleRequest(_request: Http.IncomingMessage, _response: Http.ServerResponse): Promise<void> {

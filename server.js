@@ -37,6 +37,10 @@ var P_3_1Server;
         let newUser = JSON.parse(JSON.stringify(await users.findOne({ "email": _user.email })));
         return _user.email == newUser.email;
     }
+    async function checkPassword(_user) {
+        let newUser = JSON.parse(JSON.stringify(await users.findOne({ "Passwort": _user.Passwort, "email": _user.email })));
+        return (_user.email == newUser.email && _user.Passwort == newUser.Passwort);
+    }
     async function handleRequest(_request, _response) {
         console.log("I hear voices!");
         _response.setHeader("content-type", "text/html; charset=utf-8");
