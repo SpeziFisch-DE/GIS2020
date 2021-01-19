@@ -54,10 +54,10 @@ var P_3_1Server;
         let returnString = "";
         let userCurser = users.find();
         let jsonUsers = JSON.stringify(await userCurser.toArray());
-        //let myUsers: User[] = await users.find().toArray();
-        //for (let i: number = 0; myUsers.length; i++) {
-        //    returnString = returnString + "<p>" + myUsers[i].Name + " " + myUsers[i].Nachname + "</p></br>";
-        //}
+        let myUsers = JSON.parse(jsonUsers);
+        for (let i = 0; myUsers.length; i++) {
+            returnString = returnString + "<p>" + myUsers[i].Name + " " + myUsers[i].Nachname + "</p></br>";
+        }
         return returnString + jsonUsers;
     }
     async function handleRequest(_request, _response) {
