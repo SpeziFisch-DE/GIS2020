@@ -1,5 +1,6 @@
 namespace Kapitelaufgabe3Script {
     let buttonSubmit: HTMLElement = document.getElementById("submit");
+    let responseDiv: HTMLElement = document.getElementById("div");
 
 
     buttonSubmit.addEventListener("click", handleSubmit);
@@ -13,6 +14,9 @@ namespace Kapitelaufgabe3Script {
         await fetch(url).then(async function (response: Response): Promise<void> {
             let responseText: string = await response.text();
             console.log(responseText);
+            let answer: HTMLElement = document.createElement("p");
+            answer.innerText = responseText;
+            responseDiv.appendChild(answer);
         }
         );
 

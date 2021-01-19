@@ -2,6 +2,7 @@
 var Kapitelaufgabe3Script;
 (function (Kapitelaufgabe3Script) {
     let buttonSubmit = document.getElementById("submit");
+    let responseDiv = document.getElementById("div");
     buttonSubmit.addEventListener("click", handleSubmit);
     async function handleSubmit(_event) {
         let formData = new FormData(document.forms[0]);
@@ -13,6 +14,9 @@ var Kapitelaufgabe3Script;
         await fetch(url).then(async function (response) {
             let responseText = await response.text();
             console.log(responseText);
+            let answer = document.createElement("p");
+            answer.innerText = responseText;
+            responseDiv.appendChild(answer);
         });
     }
 })(Kapitelaufgabe3Script || (Kapitelaufgabe3Script = {}));
