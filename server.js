@@ -86,7 +86,7 @@ var P_3_1Server;
                 console.log("failed!");
                 responseString = "Failed to load users!";
             }));
-            _response.write(responseString);
+            _response.write("" + responseString);
             _response.end();
         }
         else if (input.task == "signin") {
