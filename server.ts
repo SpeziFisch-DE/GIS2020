@@ -108,12 +108,13 @@ export namespace P_3_1Server {
                 _response.end();
             }
         } else if (input.task == "showusers") {
-            let responseString: string;
-            responseString = <string>(await getUsers().catch(() => {
+            let responseString: string | void;
+            responseString = (await getUsers().catch(() => {
                 console.log("failed!");
                 responseString = "Failed to load users!";
             }));
             _response.write(responseString);
+            _response.end();
         } else if (input.task == "signin") {
             if ((await checkPassword(input).catch(() => {
                 console.log("Sign in failed!");
