@@ -75,10 +75,10 @@ export namespace P_3_1Server {
         let newUser: User = JSON.parse(JSON.stringify(await users.findOne({ "Passwort": _user.Passwort, "email": _user.email })));
         return newUser != undefined;
     }
-    async function getUsers(): Promise<string> {
+    function getUsers(): string {
         let returnString: string = "";
 
-        let myUsers: User[] = JSON.parse(JSON.stringify(await users.find()));
+        let myUsers: User[] = JSON.parse(JSON.stringify(users.find()));
         for (let i: number = 0; myUsers.length; i++) {
             returnString = returnString + "<p>" + myUsers[i].Name + " " + myUsers[i].Nachname + "</p></br>";
         }
@@ -109,10 +109,7 @@ export namespace P_3_1Server {
             }
         } else if (input.task == "showusers") {
             let responseString: string | void;
-            responseString = (await getUsers().catch(() => {
-                console.log("failed!");
-                responseString = "Failed to load users!";
-            }));
+            responseString = getUsers();
             _response.write("" + responseString);
             _response.end();
         } else if (input.task == "signin") {
