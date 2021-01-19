@@ -12,8 +12,8 @@ var Kapitelaufgabe3Script;
         buttonSubmit.addEventListener("click", handleSubmit);
         async function handleSubmit(_event) {
             let formData = new FormData(document.forms[0]);
-            formData.append("task", "register");
             let url = "https://hfugis2020.herokuapp.com";
+            formData.append("task", "register");
             let query = new URLSearchParams(formData);
             url = url + "?" + query.toString();
             console.log(url);

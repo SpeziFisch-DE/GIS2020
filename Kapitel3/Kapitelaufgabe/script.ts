@@ -13,8 +13,8 @@ namespace Kapitelaufgabe3Script {
         buttonSubmit.addEventListener("click", handleSubmit);
         async function handleSubmit(_event: Event): Promise<void> {
             let formData: FormData = new FormData(document.forms[0]);
-            formData.append("task", "register");
             let url: string = "https://hfugis2020.herokuapp.com";
+            formData.append("task", "register");
             let query: URLSearchParams = new URLSearchParams(<any>formData);
             url = url + "?" + query.toString();
             console.log(url);
