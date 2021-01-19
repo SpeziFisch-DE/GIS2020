@@ -22,11 +22,6 @@ export namespace P_3_1Server {
         Passwort: string;
         //[type: string]: string | string[];
     }
-
-    interface SignIn {
-        email: string;
-        Passwort: string;
-    }
     
     function inputUser (_input: MyInput): User {
         let myUser: User;
