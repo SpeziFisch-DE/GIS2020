@@ -5,7 +5,7 @@ import * as Mongo from "mongodb";
 export namespace P_3_1Server {
     console.log("Starting server");
 
-    interface MyInput {
+    interface MyInput { //every possible input
         Name: string;
         Nachname: string;
         email: string;
@@ -14,16 +14,15 @@ export namespace P_3_1Server {
         task: string;
     }
 
-    interface User {
+    interface User { //user input from registration-Page
         Name: string;
         Nachname: string;
         email: string;
         Adresse: string;
         Passwort: string;
-        //[type: string]: string | string[];
     }
 
-    function inputUser(_input: MyInput): User {
+    function inputUser(_input: MyInput): User { //converting Input to Registration-Input
         let myUser: User = { "Name": "", "Nachname": "", "Adresse": "", "email": "", "Passwort": "" };
         myUser.Name = _input.Name;
         myUser.Nachname = _input.Nachname;
@@ -67,15 +66,15 @@ export namespace P_3_1Server {
         console.log("Listening");
     }
 
-    async function checkUser(_user: User): Promise<boolean> {
+    async function checkUser(_user: User): Promise<boolean> { //is email already used in Database?
         let newUser: User = JSON.parse(JSON.stringify(await users.findOne({ "email": _user.email })));
         return _user.email == newUser.email;
     }
-    async function checkPassword(_user: MyInput): Promise<boolean> {
+    async function checkPassword(_user: MyInput): Promise<boolean> { //is user / password correct
         let newUser: User = JSON.parse(JSON.stringify(await users.findOne({ "Passwort": _user.Passwort, "email": _user.email })));
         return newUser != undefined;
     }
-    async function getUsers(): Promise<string> {
+    async function getUsers(): Promise<string> { // return every user in Database
         let returnString: string = "";
 
         let userCurser: Mongo.Cursor = users.find();
@@ -92,11 +91,14 @@ export namespace P_3_1Server {
         console.log("I hear voices!");
         _response.setHeader("content-type", "text/html; charset=utf-8");
         _response.setHeader("Access-Control-Allow-Origin", "*");
+
         let q: Url.UrlWithParsedQuery = Url.parse(_request.url, true);
         console.log(q.search);
-        let jsonString: string = JSON.stringify(q.query);
+
+        let jsonString: string = JSON.stringify(q.query); //convert GET-Url to Input-Object
         let input: MyInput = JSON.parse(jsonString);
-        if (input.task == "register") {
+
+        if (input.task == "register") { // for requested registration
             let user: User = inputUser(input);
             if (!(await checkUser(user).catch(() => {
                 console.log("Check failed!");
@@ -108,14 +110,16 @@ export namespace P_3_1Server {
                 _response.write("user already exists!");
                 _response.end();
             }
-        } else if (input.task == "showusers") {
+
+        } else if (input.task == "showusers") { // for requested users
             let responseString: string | void;
             responseString = await getUsers().catch(() => {
                 console.log("failed!");
             });
-            _response.write("" + responseString);
+            _response.write("" + responseString)
             _response.end();
-        } else if (input.task == "signin") {
+
+        } else if (input.task == "signin") { // for requested sign in
             if ((await checkPassword(input).catch(() => {
                 console.log("Sign in failed!");
             }))) {
